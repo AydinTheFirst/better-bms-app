@@ -108,33 +108,41 @@ const Summary = ({ liveData, speed }: SummaryProps) => {
       </ErrorBoundary>
 
       <InfoGrid>
+        InfoGrid
         <>
           <label>{'Speed: '}</label>
           <span>{speed === null ? `-` : `${(speed > 2 ? speed : 0).toFixed(1)}km/h`}</span>
 
           <label>{'Mileage: '}</label>
           <span>{mileage === null ? `-` : `${mileage.toFixed(0)}wh/km`}</span>
-        </>
 
-        {formatValue(liveData, 'temperatureProbes', liveData.temperatureProbes?.[0], 'T control')}
-        {formatValue(liveData, 'temperatureProbes', liveData.temperatureProbes?.[1], 'T positive')}
+          {formatValue(liveData, 'temperatureProbes', liveData.temperatureProbes?.[0], 'T control')}
+          {formatValue(
+            liveData,
+            'temperatureProbes',
+            liveData.temperatureProbes?.[1],
+            'T positive'
+          )}
 
-        {Object.entries(liveData || {})
-          .filter(([key, name]) => Object.hasOwn(liveDataUIConfig, key) && typeof name !== 'object')
-          .filter(([key]) =>
-            (['cellVoltageDelta', 'balanceCurrent'] as (keyof LiveData)[]).includes(
-              key as keyof LiveData
+          {Object.entries(liveData || {})
+            .filter(
+              ([key, name]) => Object.hasOwn(liveDataUIConfig, key) && typeof name !== 'object'
             )
-          )
-          // @ts-ignore
-          .map(([name, value]: [string, number]) => (
-            <React.Fragment key={name}>
-              {
-                // @ts-ignore
-                formatValue(liveData, name, value)
-              }
-            </React.Fragment>
-          ))}
+            .filter(([key]) =>
+              (['cellVoltageDelta', 'balanceCurrent'] as (keyof LiveData)[]).includes(
+                key as keyof LiveData
+              )
+            )
+            // @ts-ignore
+            .map(([name, value]: [string, number]) => (
+              <React.Fragment key={name}>
+                {
+                  // @ts-ignore
+                  formatValue(liveData, name, value)
+                }
+              </React.Fragment>
+            ))}
+        </>
       </InfoGrid>
     </SummaryContainer>
   );

@@ -28,25 +28,34 @@ const Details = ({ liveData }: DetailsProps) => {
       </ErrorBoundary>
 
       <InfoGrid>
-        {formatValue(
-          liveData,
-          'temperatureProbes',
-          liveData.temperatureProbes?.[0],
-          'T controller'
-        )}
-        {formatValue(liveData, 'temperatureProbes', liveData.temperatureProbes?.[1], 'T positive')}
+        <>
+          {formatValue(
+            liveData,
+            'temperatureProbes',
+            liveData.temperatureProbes?.[0],
+            'T controller'
+          )}
+          {formatValue(
+            liveData,
+            'temperatureProbes',
+            liveData.temperatureProbes?.[1],
+            'T positive'
+          )}
 
-        {Object.entries(liveData || {})
-          .filter(([key, name]) => Object.hasOwn(liveDataUIConfig, key) && typeof name !== 'object')
-          // @ts-ignore
-          .map(([name, value]: [string, number]) => (
-            <React.Fragment key={name}>
-              {
-                // @ts-ignore
-                formatValue(liveData, name, value)
-              }
-            </React.Fragment>
-          ))}
+          {Object.entries(liveData || {})
+            .filter(
+              ([key, name]) => Object.hasOwn(liveDataUIConfig, key) && typeof name !== 'object'
+            )
+            // @ts-ignore
+            .map(([name, value]: [string, number]) => (
+              <React.Fragment key={name}>
+                {
+                  // @ts-ignore
+                  formatValue(liveData, name, value)
+                }
+              </React.Fragment>
+            ))}
+        </>
       </InfoGrid>
 
       <CellsGrid>
